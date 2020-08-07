@@ -26,9 +26,10 @@ def delete(request, id):
     return redirect("/")
 
 def update(request, id):  
-    obje = Create.objects.get(id=id)  
-    form = CreateForm(request.POST, object = obje)  
-    if form.is_valid():  
-        form.save()  
-        return redirect("/")  
-    return render(request, 'edit.html', {'object': obje})  
+    obj = Create.objects.get(id=id)
+    if request.method == "POST":
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        update = Create(name = name , email = email)
+        update.save()
+    return render(request,'/',{'object': obj})
